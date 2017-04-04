@@ -144,7 +144,7 @@ public class ChooseAreaFragment extends Fragment {
     }
 
     /**
-     * 查询全国所有的市，优先从数据库查询，如果没有查询到再去服务器上查询
+     * 查询选中省内所有的市，优先从数据库查询，如果没有查询到再去服务器上查询
      */
     private void queryCities() {
         titleText.setText(selectedProvince.getProvinceName());
@@ -160,13 +160,13 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel = LEVEL_CITY;
         } else {
             int provinceCode = selectedProvince.getProvinceCode();
-            String address = "http://guolin.tech/api/china" + provinceCode;
+            String address = "http://guolin.tech/api/china/" + provinceCode;
             queryFromServer(address, "city");
         }
     }
 
     /**
-     * 查询全国所有的县，优先从数据库查询，如果没有查询到再去服务器上查询
+     * 查询选中市内所有的县，优先从数据库查询，如果没有查询到再去服务器上查询
      */
     private void queryCounties() {
         titleText.setText(selectedCity.getCityName());
@@ -183,7 +183,7 @@ public class ChooseAreaFragment extends Fragment {
         } else {
             int provinceCode = selectedProvince.getProvinceCode();
             int cityCode = selectedCity.getCityCode();
-            String address = "http://guolin.tech/api/china" + provinceCode + cityCode;
+            String address = "http://guolin.tech/api/china/" + provinceCode + "/" + cityCode;
             queryFromServer(address, "county");
         }
     }
@@ -203,7 +203,7 @@ public class ChooseAreaFragment extends Fragment {
                 } else if ("city".equals(type)) {
                     result = Utility.handleCityResponse(responseText, selectedProvince.getId());
                 } else if ("county".equals(type)) {
-                    result = Utility.handleCityResponse(responseText, selectedCity.getId());
+                    result = Utility.handleCountyResponse(responseText, selectedCity.getId());
             }
                 if (result) {
                     getActivity().runOnUiThread(new Runnable() {
