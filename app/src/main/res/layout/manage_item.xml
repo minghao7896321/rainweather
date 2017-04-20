@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/manageitem"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:background="@android:color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/delete_item_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_delete_item"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/discity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="15dp"
+            android:padding="10dp"
+            android:text="Area"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/disdegree_info_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layout_marginRight="20dp"
+            android:padding="10dp"
+            android:text="Null/Null"
+            android:textSize="20sp"/>
+
+</LinearLayout>

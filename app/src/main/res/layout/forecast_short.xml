@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="9dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#8000"
+            android:layout_margin="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="今天"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:id="@+id/degree2_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="45dp"
+                        android:textColor="#fff"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/weather2_info_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#8000"
+            android:layout_margin="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="明天"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:id="@+id/degree3_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="45dp"
+                        android:textColor="#fff" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/weather3_info_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

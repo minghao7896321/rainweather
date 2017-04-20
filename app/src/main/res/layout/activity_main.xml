@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment
-        android:id="@+id/choose_area_fragment"
-        android:name="com.rainweather.android.ChooseAreaFragment"
+    <LinearLayout
+        android:id="@+id/choose_area_menu"
+        android:name="com.rainweather.android.ChooseAreaActivity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    </LinearLayout>
 
 </FrameLayout>

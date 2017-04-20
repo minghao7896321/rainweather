@@ -3,10 +3,9 @@ package com.rainweather.android;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,7 +34,7 @@ import okhttp3.Response;
  * Created by lenovo on 2017/4/4.
  */
 
-public class ChooseAreaFragment extends Fragment {
+public class ChooseAreaActivity extends AppCompatActivity {
 
     public static final int LEVEL_PROVINCE = 0;
 
@@ -86,19 +85,14 @@ public class ChooseAreaFragment extends Fragment {
     private int currentLevel;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.choose_area, container, false);
-        titleText = (TextView) view.findViewById(R.id.title_text);
-        backButton = (Button) view.findViewById(R.id.back_button);
-        listView = (ListView) view.findViewById(R.id.list_view);
-        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, dataList);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.choose_area);
+        titleText = (TextView) findViewById(R.id.title_text);
+        backButton = (Button) findViewById(R.id.back_button);
+        listView = (ListView) findViewById(R.id.list_view);
+        adapter = new ArrayAdapter<String>(ChooseAreaActivity.this, android.R.layout.simple_list_item_1, dataList);
         listView.setAdapter(adapter);
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // 选中按钮的事件
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -111,17 +105,21 @@ public class ChooseAreaFragment extends Fragment {
                 } else if (currentLevel == LEVEL_COUNTY) {
                     String countyName = countyList.get(position).getCountyName();
                     String weatherId = countyList.get(position).getWeatherId();
+                    //重点，考虑重复选择城市的情况，数据库操作导致变慢？BUG:天气加载失败后也会在display表中加入数据
+                    List<Display> displays = DataSupport.where("weatherId = ?", weatherId).find(Display.class);
+                    //if (displays == null) {
+                        Display display = new Display();
+                        display.setCountyName(countyName);
+                        display.setWeatherId(weatherId);
+                        display.setDistemperature("Null/Null");
+                        display.save();
 
-                    Display display = new Display();
-                    display.setCountyName(countyName);
-                    display.setWeatherId(weatherId);
-                    display.setDistemperature("Null/Null");
-                    display.save();
-
-                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                    intent.putExtra("weather_id", weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
+                        Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
+                        intent.putExtra("weather_id", weatherId);
+                        startActivity(intent);
+                    /*} else {
+                        Toast.makeText(ChooseAreaActivity.this, "您已添加过该城市，无法重复添加", Toast.LENGTH_SHORT).show();
+                    }*/
                 }
             }
         });
@@ -132,6 +130,9 @@ public class ChooseAreaFragment extends Fragment {
                     queryCities();
                 } else if (currentLevel == LEVEL_CITY) {
                     queryProvinces();
+                } else if (currentLevel == LEVEL_PROVINCE) {
+                    Intent intent = new Intent(ChooseAreaActivity.this, ManageAreaActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -217,9 +218,9 @@ public class ChooseAreaFragment extends Fragment {
                     result = Utility.handleCityResponse(responseText, selectedProvince.getId());
                 } else if ("county".equals(type)) {
                     result = Utility.handleCountyResponse(responseText, selectedCity.getId());
-            }
+                }
                 if (result) {
-                    getActivity().runOnUiThread(new Runnable() {
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             closeProgressDialog();
@@ -238,11 +239,11 @@ public class ChooseAreaFragment extends Fragment {
             @Override
             public void onFailure(Call call, IOException e) {
                 // 通过runOnUiThread()方法回到主线程处理逻辑
-                getActivity().runOnUiThread(new Runnable() {
+                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         closeProgressDialog();
-                        Toast.makeText(getContext(), "加载失败,请检查网络设置", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChooseAreaActivity.this, "加载失败,请检查网络设置", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -254,7 +255,7 @@ public class ChooseAreaFragment extends Fragment {
      */
     private void showProgressDialog() {
         if (progressDialog == null) {
-            progressDialog = new ProgressDialog(getActivity());
+            progressDialog = new ProgressDialog(ChooseAreaActivity.this);
             progressDialog.setMessage("正在加载...");
             progressDialog.setCanceledOnTouchOutside(false);
         }
@@ -262,7 +263,7 @@ public class ChooseAreaFragment extends Fragment {
     }
 
     /**
-     * 显示进度对话框
+     * 关闭进度对话框
      */
     private void closeProgressDialog() {
         if (progressDialog != null) {

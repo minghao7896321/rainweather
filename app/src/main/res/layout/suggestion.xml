@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="#8000"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="生活建议"
+        android:textColor="#fff"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="舒适度指数"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/comfortindex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="1"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/comfortinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="2"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="洗车指数"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/carWashindex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="1"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/carWashinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="2"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="穿衣指数"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/drsgindex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="1"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/drsginfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="2"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="感冒指数"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/fluindex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="1"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/fluinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="2"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="运动指数"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/sportindex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="1"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/sportinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="2"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="旅游指数"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/travindex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="1"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/travinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="2"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+</LinearLayout>
