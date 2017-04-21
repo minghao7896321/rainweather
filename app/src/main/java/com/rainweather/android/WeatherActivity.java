@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.rainweather.android.gson.Forecast;
 import com.rainweather.android.gson.Weather;
+import com.rainweather.android.service.AutoUpdateService;
 import com.rainweather.android.util.HttpUtil;
 import com.rainweather.android.util.Utility;
 
@@ -194,7 +195,10 @@ public class WeatherActivity extends AppCompatActivity {
         titleCity.setText(cityName);
         degreeText.setText(degree);
         weatherInfoText.setText(weather.now.situation.weatherinfo);
-        pm25Text.setText(weather.aqi.city.pm25);
+        //服务器中港澳台没有AQI数据
+        if (weather.aqi != null) {
+            pm25Text.setText(weather.aqi.city.pm25);
+        }
         int num = 0;
         forecastLayout.removeAllViews();
         for (Forecast forecast : weather.forecastList) {
@@ -233,6 +237,8 @@ public class WeatherActivity extends AppCompatActivity {
         travSign.setText(weather.suggestion.travel.travindex);
         travText.setText(weather.suggestion.travel.travinfo);
         weatherLayout.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 
 }

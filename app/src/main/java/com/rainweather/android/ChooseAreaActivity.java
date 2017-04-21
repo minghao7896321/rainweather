@@ -107,7 +107,11 @@ public class ChooseAreaActivity extends AppCompatActivity {
                     String weatherId = countyList.get(position).getWeatherId();
                     //重点，考虑重复选择城市的情况，数据库操作导致变慢？BUG:天气加载失败后也会在display表中加入数据
                     List<Display> displays = DataSupport.where("weatherId = ?", weatherId).find(Display.class);
-                    //if (displays == null) {
+                    String text = "";
+                    for (Display olddisplay : displays) {
+                        text = olddisplay.getWeatherId();
+                    }
+                    if (text.equals("")) {
                         Display display = new Display();
                         display.setCountyName(countyName);
                         display.setWeatherId(weatherId);
@@ -117,9 +121,9 @@ public class ChooseAreaActivity extends AppCompatActivity {
                         Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
                         intent.putExtra("weather_id", weatherId);
                         startActivity(intent);
-                    /*} else {
+                    } else {
                         Toast.makeText(ChooseAreaActivity.this, "您已添加过该城市，无法重复添加", Toast.LENGTH_SHORT).show();
-                    }*/
+                    }
                 }
             }
         });

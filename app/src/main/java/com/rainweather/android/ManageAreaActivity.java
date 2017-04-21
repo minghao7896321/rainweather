@@ -55,7 +55,7 @@ public class ManageAreaActivity extends AppCompatActivity {
 
             }
         });
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -77,8 +77,8 @@ public class ManageAreaActivity extends AppCompatActivity {
                 doneButton.setVisibility(View.VISIBLE);
                 backmainButton.setVisibility(View.INVISIBLE);
                 addButton.setVisibility(View.INVISIBLE);
-                Intent intent = new Intent("delete");
-                sendBroadcast(intent); // 发送标准广播
+                DelAdapter delAdapter = new DelAdapter(displayList);
+                recyclerView.setAdapter(delAdapter);
             }
         });
         doneButton.setOnClickListener(new View.OnClickListener() {
@@ -87,9 +87,11 @@ public class ManageAreaActivity extends AppCompatActivity {
                 doneButton.setVisibility(View.GONE);
                 deleteButton.setVisibility(View.VISIBLE);
                 backmainButton.setVisibility(View.VISIBLE);
-                addButton.setVisibility(View.VISIBLE);
+                addButton.setVisibility(View.VISIBLE);/*
                 Intent intent = new Intent("done");
-                sendBroadcast(intent); // 发送标准广播
+                sendBroadcast(intent); // 发送标准广播*/
+                ManageAdapter adapter = new ManageAdapter(displayList);
+                recyclerView.setAdapter(adapter);
             }
         });
         addButton.setOnClickListener(new View.OnClickListener() {

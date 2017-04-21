@@ -18,27 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WeatherActivity"></activity>
-        <activity android:name=".ChooseAreaActivity"></activity>
-        <activity android:name=".ManageAreaActivity"></activity>
+        <activity android:name=".WeatherActivity" />
+        <activity android:name=".ChooseAreaActivity" />
+        <activity android:name=".ManageAreaActivity" />
 
-        <receiver
-            android:name="com.rainweather.android.ManageAdapter$DeleteReceiver"
+        <service
+            android:name=".service.AutoUpdateService"
             android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="delete" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name="com.rainweather.android.ManageAdapter$DoneReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="done" />
-            </intent-filter>
-        </receiver>
+            android:exported="true"></service>
     </application>
 
 </manifest>
