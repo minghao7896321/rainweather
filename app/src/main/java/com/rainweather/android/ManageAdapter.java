@@ -1,5 +1,6 @@
 package com.rainweather.android;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -46,8 +47,7 @@ public class ManageAdapter extends RecyclerView.Adapter<ManageAdapter.ViewHolder
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.manage_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manage_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         holder.manageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +58,13 @@ public class ManageAdapter extends RecyclerView.Adapter<ManageAdapter.ViewHolder
                 Intent intent = new Intent(v.getContext(), WeatherActivity.class);
                 intent.putExtra("weather_id", weatherId);
                 v.getContext().startActivity(intent);
+                // if(context instanceof Activity)同样效果
+                if(Activity.class.isInstance(v.getContext())) // 有点丢帧？
+                {
+                    // 转化为activity，然后finish就行了
+                    Activity activity = (Activity)v.getContext();
+                    activity.finish();
+                }
             }
         });
         return holder;

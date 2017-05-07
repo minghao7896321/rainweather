@@ -19,6 +19,7 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         //设定底部边距为1px
-        outRect.set(0, 0, 0, 1);
+        //四个参数分别是left,top,right,bottom
+        outRect.set(0, 0, 1, 0);
     }
 }

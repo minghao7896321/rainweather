@@ -43,8 +43,7 @@ public class DelAdapter extends RecyclerView.Adapter<DelAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.manage_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manage_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         holder.deleteItemButton.setVisibility(View.VISIBLE);
         holder.manageView.setOnClickListener(new View.OnClickListener() {

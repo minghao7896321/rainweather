@@ -19,6 +19,12 @@ public class Forecast {
         @SerializedName("txt_n")
         public String weatherinfo_n;
 
+        @SerializedName("code_d")
+        public String iconday;
+
+        @SerializedName("code_n")
+        public String iconight;
+
     }
 
     public String date;

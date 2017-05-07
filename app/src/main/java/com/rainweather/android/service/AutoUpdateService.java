@@ -61,7 +61,7 @@ public class AutoUpdateService extends Service {
                     final String responseText = response.body().string();
                     final Weather weather = Utility.handleWeatherResponse(responseText);
                     if (weather != null && "ok".equals(weather.status)) {
-                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(AutoUpdateService.this).edit();
+                        SharedPreferences.Editor editor = getSharedPreferences("data1", MODE_PRIVATE).edit();
                         editor.putString("weather", responseText);
                         editor.apply();
                     }
@@ -70,6 +70,7 @@ public class AutoUpdateService extends Service {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     e.printStackTrace();
+                    Toast.makeText(AutoUpdateService.this, "获取天气信息失败,请检查网络设置", Toast.LENGTH_SHORT).show();
                 }
             });
         }

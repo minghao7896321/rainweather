@@ -1,8 +1,13 @@
 package com.rainweather.android;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -93,6 +98,16 @@ public class ChooseAreaActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_view);
         adapter = new ArrayAdapter<String>(ChooseAreaActivity.this, android.R.layout.simple_list_item_1, dataList);
         listView.setAdapter(adapter);
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(ChooseAreaActivity.this);
+        dialog.setTitle("添加失败");
+        dialog.setMessage("抱歉，连接网络失败，请检查您的网络设置");
+        dialog.setCancelable(false);
+        dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // 选中按钮的事件
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -103,26 +118,33 @@ public class ChooseAreaActivity extends AppCompatActivity {
                     selectedCity = cityList.get(position);
                     queryCounties();
                 } else if (currentLevel == LEVEL_COUNTY) {
-                    String countyName = countyList.get(position).getCountyName();
-                    String weatherId = countyList.get(position).getWeatherId();
-                    //重点，考虑重复选择城市的情况，数据库操作导致变慢？BUG:天气加载失败后也会在display表中加入数据
-                    List<Display> displays = DataSupport.where("weatherId = ?", weatherId).find(Display.class);
-                    String text = "";
-                    for (Display olddisplay : displays) {
-                        text = olddisplay.getWeatherId();
-                    }
-                    if (text.equals("")) {
-                        Display display = new Display();
-                        display.setCountyName(countyName);
-                        display.setWeatherId(weatherId);
-                        display.setDistemperature("Null/Null");
-                        display.save();
+                    if(isNetworkAvailable(ChooseAreaActivity.this)) {
+                        String countyName = countyList.get(position).getCountyName();
+                        String weatherId = countyList.get(position).getWeatherId();
+                        //数据库操作导致变慢？
+                        List<Display> displays = DataSupport.where("weatherId = ?", weatherId).find(Display.class);
+                        String text = "";
+                        for (Display olddisplay : displays) {
+                            text = olddisplay.getWeatherId();
+                        }
+                        //考虑重复选择城市的情况
+                        if (text.equals("")) {
+                            // 插入数据尽量不放在showWeatherInfo里，因为经常要展示
+                            Display display = new Display();
+                            display.setCountyName(countyName);
+                            display.setWeatherId(weatherId);
+                            display.setDistemperature("Null/Null");
+                            display.save();
 
-                        Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
-                        intent.putExtra("weather_id", weatherId);
-                        startActivity(intent);
+                            Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
+                            intent.putExtra("weather_id", weatherId);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(ChooseAreaActivity.this, "您已添加过该城市，无法重复添加", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(ChooseAreaActivity.this, "您已添加过该城市，无法重复添加", Toast.LENGTH_SHORT).show();
+                        dialog.show();
                     }
                 }
             }
@@ -137,6 +159,7 @@ public class ChooseAreaActivity extends AppCompatActivity {
                 } else if (currentLevel == LEVEL_PROVINCE) {
                     Intent intent = new Intent(ChooseAreaActivity.this, ManageAreaActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -247,7 +270,7 @@ public class ChooseAreaActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         closeProgressDialog();
-                        Toast.makeText(ChooseAreaActivity.this, "加载失败,请检查网络设置", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChooseAreaActivity.this, "加载失败,请检查您的网络设置", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -273,6 +296,24 @@ public class ChooseAreaActivity extends AppCompatActivity {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivity = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
+            NetworkInfo info = connectivity.getActiveNetworkInfo();
+            if (info != null && info.isConnected())
+            {
+                // 当前网络是连接的
+                if (info.getState() == NetworkInfo.State.CONNECTED)
+                {
+                    // 当前所连接的网络可用
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

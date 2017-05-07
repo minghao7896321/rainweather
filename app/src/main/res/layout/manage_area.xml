@@ -24,7 +24,7 @@
             android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="13dp"
             android:background="@drawable/ic_back" />
 
         <Button
@@ -58,7 +58,7 @@
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_view"
+        android:id="@+id/manage_recycle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/darker_gray"/>

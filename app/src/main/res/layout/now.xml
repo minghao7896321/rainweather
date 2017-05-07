@@ -7,13 +7,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="245dp" />
+        android:layout_height="240dp" />
 
     <TextView
         android:id="@+id/degree_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
+        android:fontFamily="sans-serif-thin"
         android:textColor="#fff"
         android:textSize="100sp" />
 
@@ -24,10 +25,10 @@
         android:layout_gravity="left"
         android:layout_marginLeft="15dp"
         android:textColor="#fff"
-        android:textSize="20sp" />
+        android:textSize="28sp" />
 
     <TextView
-        android:id="@+id/pm25_text"
+        android:id="@+id/level_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"

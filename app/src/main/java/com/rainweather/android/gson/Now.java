@@ -13,6 +13,9 @@ public class Now {
 
     public class Situation {
 
+        @SerializedName("code")
+        public String weathercode;
+
         @SerializedName("txt")
         public String weatherinfo;
 

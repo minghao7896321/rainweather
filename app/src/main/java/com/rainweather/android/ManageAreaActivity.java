@@ -28,6 +28,8 @@ public class ManageAreaActivity extends AppCompatActivity {
 
     private List<Display> displayList = new ArrayList<>();
 
+    private RecyclerView recyclerView;
+
     private Button backmainButton;
 
     private Button deleteButton;
@@ -44,10 +46,8 @@ public class ManageAreaActivity extends AppCompatActivity {
         deleteButton = (Button) findViewById(R.id.delete_button);
         doneButton = (Button) findViewById(R.id.done_button);
         addButton = (Button) findViewById(R.id.add_button);
-        displayList =  DataSupport.findAll(Display.class);
+        displayList = DataSupport.findAll(Display.class);
         final AlertDialog.Builder dialog = new AlertDialog.Builder(ManageAreaActivity.this);
-        dialog.setTitle("添加城市");
-        dialog.setMessage("最多只能添加9个城市");
         dialog.setCancelable(false);
         dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override
@@ -55,30 +55,42 @@ public class ManageAreaActivity extends AppCompatActivity {
 
             }
         });
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
+
+        recyclerView = (RecyclerView) findViewById(R.id.manage_recycle_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        //添加装饰类
-        recyclerView.addItemDecoration(new MyItemDecoration());
+        recyclerView.addItemDecoration(new MyItemDecoration());//添加装饰类
         ManageAdapter adapter = new ManageAdapter(displayList);
         recyclerView.setAdapter(adapter);
+
         backmainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManageAreaActivity.this, WeatherActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                deleteButton.setVisibility(View.GONE); // 设置控件以不占空间的形式隐藏
-                doneButton.setVisibility(View.VISIBLE);
-                backmainButton.setVisibility(View.INVISIBLE);
-                addButton.setVisibility(View.INVISIBLE);
-                DelAdapter delAdapter = new DelAdapter(displayList);
-                recyclerView.setAdapter(delAdapter);
+            public void onClick(View v) {/*
+                int num = 1;
+                for (Display display : displayList) {
+                    num++;
+                }*/
+                if (displayList.size() > 1) {
+                    deleteButton.setVisibility(View.GONE); // 设置控件以不占空间的形式隐藏
+                    doneButton.setVisibility(View.VISIBLE);
+                    backmainButton.setVisibility(View.INVISIBLE);
+                    addButton.setVisibility(View.INVISIBLE);
+                    DelAdapter delAdapter = new DelAdapter(displayList);
+                    recyclerView.setAdapter(delAdapter);
+                } else {
+                    dialog.setTitle("删除城市");
+                    dialog.setMessage("最少保留一个城市");
+                    dialog.show();
+                }
             }
         });
         doneButton.setOnClickListener(new View.OnClickListener() {
@@ -87,9 +99,7 @@ public class ManageAreaActivity extends AppCompatActivity {
                 doneButton.setVisibility(View.GONE);
                 deleteButton.setVisibility(View.VISIBLE);
                 backmainButton.setVisibility(View.VISIBLE);
-                addButton.setVisibility(View.VISIBLE);/*
-                Intent intent = new Intent("done");
-                sendBroadcast(intent); // 发送标准广播*/
+                addButton.setVisibility(View.VISIBLE);
                 ManageAdapter adapter = new ManageAdapter(displayList);
                 recyclerView.setAdapter(adapter);
             }
@@ -98,18 +108,39 @@ public class ManageAreaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //最多九个地区
+                /*
                 int num = 1;
                 for (Display display : displayList) {
                     num++;
-                }
-                if (num <= 9) {
+                }*/
+                if (displayList.size() < 9) {
                     Intent intent = new Intent(ManageAreaActivity.this, ChooseAreaActivity.class);
                     startActivity(intent);
+                    finish();
                 } else {
+                    dialog.setTitle("添加城市");
+                    dialog.setMessage("最多只能添加9个城市");
                     dialog.show();
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doneButton.getVisibility() == View.VISIBLE) {
+            deleteButton.setVisibility(View.VISIBLE);
+            doneButton.setVisibility(View.GONE);
+            backmainButton.setVisibility(View.VISIBLE);
+            addButton.setVisibility(View.VISIBLE);
+            ManageAdapter adapter = new ManageAdapter(displayList);
+            recyclerView.setAdapter(adapter);
+        } else {
+            //super.onBackPressed();
+            Intent intent = new Intent(ManageAreaActivity.this, WeatherActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
 }
