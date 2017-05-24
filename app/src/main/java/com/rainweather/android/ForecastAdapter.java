@@ -26,9 +26,12 @@ import java.util.List;
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHolder> {
 
     private Context mContext;
+
     private List<Forecast> mForecastList;
-    int mLowestTem;
-    int mHighestTem;
+
+    private int mLowestTem;
+
+    private int mHighestTem;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         View forecastView;
@@ -87,7 +90,6 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // 最低温度设置为15，最高温度设置为30
         Resources resources = mContext.getResources();
         Forecast forecast = mForecastList.get(position);
         String date = forecast.date;

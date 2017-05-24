@@ -108,7 +108,7 @@ public class ChooseAreaActivity extends AppCompatActivity {
 
             }
         });
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // 选中按钮的事件
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // 选中城市的事件
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (currentLevel == LEVEL_PROVINCE) {
@@ -123,12 +123,8 @@ public class ChooseAreaActivity extends AppCompatActivity {
                         String weatherId = countyList.get(position).getWeatherId();
                         //数据库操作导致变慢？
                         List<Display> displays = DataSupport.where("weatherId = ?", weatherId).find(Display.class);
-                        String text = "";
-                        for (Display olddisplay : displays) {
-                            text = olddisplay.getWeatherId();
-                        }
                         //考虑重复选择城市的情况
-                        if (text.equals("")) {
+                        if (displays.isEmpty()) {
                             // 插入数据尽量不放在showWeatherInfo里，因为经常要展示
                             Display display = new Display();
                             display.setCountyName(countyName);
@@ -316,4 +312,16 @@ public class ChooseAreaActivity extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (currentLevel == LEVEL_COUNTY) {
+            queryCities();
+        } else if (currentLevel == LEVEL_CITY) {
+            queryProvinces();
+        } else if (currentLevel == LEVEL_PROVINCE) {
+            Intent intent = new Intent(ChooseAreaActivity.this, ManageAreaActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 }

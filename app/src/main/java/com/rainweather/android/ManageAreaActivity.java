@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.rainweather.android.db.Display;
+import com.rainweather.android.draw.ManageItemDecoration;
 
 import org.litepal.crud.DataSupport;
 
@@ -38,6 +39,8 @@ public class ManageAreaActivity extends AppCompatActivity {
 
     private Button addButton;
 
+    private String weatherId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,7 @@ public class ManageAreaActivity extends AppCompatActivity {
         doneButton = (Button) findViewById(R.id.done_button);
         addButton = (Button) findViewById(R.id.add_button);
         displayList = DataSupport.findAll(Display.class);
+        weatherId = getIntent().getStringExtra("now_weather_id");
         final AlertDialog.Builder dialog = new AlertDialog.Builder(ManageAreaActivity.this);
         dialog.setCancelable(false);
         dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
@@ -60,16 +64,31 @@ public class ManageAreaActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new MyItemDecoration());//添加装饰类
+        recyclerView.addItemDecoration(new ManageItemDecoration());//添加装饰类
         ManageAdapter adapter = new ManageAdapter(displayList);
         recyclerView.setAdapter(adapter);
 
         backmainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ManageAreaActivity.this, WeatherActivity.class);
-                startActivity(intent);
-                finish();
+                List<Display> displays = DataSupport.where("weatherId = ?", weatherId).find(Display.class);
+                /*String text = "";
+                for (Display olddisplay : displays) {
+                    text = olddisplay.getWeatherId();
+                }*/
+                //if (text.equals("")) {
+                //删除当前主页面的城市时的操作方法
+                if (displays.isEmpty()) {
+                    Intent intent = new Intent(ManageAreaActivity.this, WeatherActivity.class);
+                    weatherId = displayList.get(displayList.size() - 1).getWeatherId();
+                    intent.putExtra("weather_id", weatherId);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(ManageAreaActivity.this, WeatherActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -137,9 +156,18 @@ public class ManageAreaActivity extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
         } else {
             //super.onBackPressed();
-            Intent intent = new Intent(ManageAreaActivity.this, WeatherActivity.class);
-            startActivity(intent);
-            finish();
+            List<Display> displays = DataSupport.where("weatherId = ?", weatherId).find(Display.class);
+            if (displays.isEmpty()) {
+                Intent intent = new Intent(ManageAreaActivity.this, WeatherActivity.class);
+                weatherId = displayList.get(displayList.size() - 1).getWeatherId();
+                intent.putExtra("weather_id", weatherId);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent = new Intent(ManageAreaActivity.this, WeatherActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 

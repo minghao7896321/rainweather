@@ -1,5 +1,6 @@
 package com.rainweather.android;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,6 +56,13 @@ public class DelAdapter extends RecyclerView.Adapter<DelAdapter.ViewHolder> {
                 Intent intent = new Intent(v.getContext(), WeatherActivity.class);
                 intent.putExtra("weather_id", weatherId);
                 v.getContext().startActivity(intent);
+                // if(context instanceof Activity)同样效果
+                if(Activity.class.isInstance(v.getContext())) // 有点丢帧？
+                {
+                    // 转化为activity，然后finish就行了
+                    Activity activity = (Activity)v.getContext();
+                    activity.finish();
+                }
             }
         });
         holder.deleteItemButton.setOnClickListener(new View.OnClickListener() {

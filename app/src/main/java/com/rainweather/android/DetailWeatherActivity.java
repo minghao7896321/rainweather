@@ -45,8 +45,6 @@ public class DetailWeatherActivity extends AppCompatActivity implements View.OnC
 
     private List<Fragment> mFragments = new ArrayList<>();
 
-    private ArrayList<TextView> Layout;
-
     private TextView Layout_1;
 
     private TextView Layout_2;
@@ -173,7 +171,7 @@ public class DetailWeatherActivity extends AppCompatActivity implements View.OnC
                 return mFragments.get(position);
             }
 
-            @Override
+                @Override
             public int getCount() {
                 return mFragments.size();
             }
@@ -217,23 +215,23 @@ public class DetailWeatherActivity extends AppCompatActivity implements View.OnC
             @Override
             public void run() {
                 if (code == 100) {
-                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_sunny).asBitmap().into(PicImg);
+                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_sunny).asBitmap().skipMemoryCache(true).into(PicImg);
                 } else if (code >= 101 && code <=103) {
-                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_cloudy).asBitmap().into(PicImg);
+                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_cloudy).asBitmap().skipMemoryCache(true).into(PicImg);
                 } else if (code == 104) {
-                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_overcast).asBitmap().into(PicImg);
+                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_overcast).asBitmap().skipMemoryCache(true).into(PicImg);
                 } else if (code >= 300 && code <= 313) {
-                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_rain).asBitmap().into(PicImg);
+                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_rain).asBitmap().skipMemoryCache(true).into(PicImg);
                 } else if (code >= 400 && code <= 407) {
-                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_snow).asBitmap().into(PicImg);
+                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_snow).asBitmap().skipMemoryCache(true).into(PicImg);
                 } else if (code == 500 || code == 501) {
-                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_fog).asBitmap().into(PicImg);
+                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_fog).asBitmap().skipMemoryCache(true).into(PicImg);
                 } else if (code == 502) {
-                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_haze).asBitmap().into(PicImg);
+                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_haze).asBitmap().skipMemoryCache(true).into(PicImg);
                 } else if (code >= 503 && code <= 508) {
-                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_duststorm).asBitmap().into(PicImg);
+                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_duststorm).asBitmap().skipMemoryCache(true).into(PicImg);
                 } else {
-                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_normal).asBitmap().into(PicImg);
+                    Glide.with(DetailWeatherActivity.this).load(R.drawable.bg_normal).asBitmap().skipMemoryCache(true).into(PicImg);
                 }
             }
         });
